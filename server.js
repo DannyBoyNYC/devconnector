@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 
 users = require('./routes/api/users')
 profile = require('./routes/api/profile')
@@ -21,6 +22,9 @@ mongoose
 app.get('/', (req, res) => {
   res.send('hi')
 })
+
+app.use(passport.initialize())
+require('./config/passport')(passport)
 
 app.use('/api/users', users)
 app.use('/api/profile', profile)
