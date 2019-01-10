@@ -9,13 +9,7 @@ class ProfileItem extends Component {
     console.log(profile);
     return (
       <div className="card card-body bg-light mb-3">
-        <h1>SINGLE PROFILE</h1>
-
-        <p>
-          {profile.handle}
-        </p>
-
-        {/* <div className="row">
+        <div className="row">
           <div className="col-2">
             <img src={profile.user.avatar} alt="" className="rounded-circle" />
           </div>
@@ -53,7 +47,7 @@ class ProfileItem extends Component {
               )}
             </ul>
           </div>
-        </div> */}
+        </div>
       </div>
     );
   }
