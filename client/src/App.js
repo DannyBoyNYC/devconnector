@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
-import { setCurrentUser } from './actions/authActions';
+import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
-import { logoutUser } from './actions/authActions';
+
 import { Provider } from 'react-redux';
 import store from './store';
 
@@ -22,26 +22,29 @@ import AddExperience from './components/add-credentials/AddExperience';
 import AddEducation from './components/add-credentials/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
+import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 import NotFound from './components/not-found/NotFound';
 
 import './App.css';
 
-// check for token
+// Check for token
 if (localStorage.jwtToken) {
-  // set auth token header auth
+  // Set auth token header auth
   setAuthToken(localStorage.jwtToken);
-  // decode token and get user info and exp
+  // Decode token and get user info and exp
   const decoded = jwt_decode(localStorage.jwtToken);
-  // set user and isAuthenticated
+  // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
-  // check for expired token
+
+  // Check for expired token
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
-    // log out user
+    // Logout user
     store.dispatch(logoutUser());
-    // clear current profile
+    // Clear current Profile
     store.dispatch(clearCurrentProfile());
-    // redirect to login
+    // Redirect to login
     window.location.href = '/login';
   }
 }
@@ -89,6 +92,12 @@ class App extends Component {
                   path="/add-education"
                   component={AddEducation}
                 />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/feed" component={Posts} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/post/:id" component={Post} />
               </Switch>
               <Route exact path="/not-found" component={NotFound} />
             </div>
