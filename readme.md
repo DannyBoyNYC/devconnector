@@ -1,3 +1,1 @@
-John Doe
-john.doe@gmail.com
-jd2345
+The final result of Traversy's MERN class on Udemy. 
